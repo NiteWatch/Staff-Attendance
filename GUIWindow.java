@@ -41,7 +41,7 @@ public class GUIWindow extends JFrame{
 	
 	}
 	
-	private class FahrHandler implements ActionListener
+	private class idHandler implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e)
 		{
