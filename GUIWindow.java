@@ -11,7 +11,7 @@ public class GUIWindow extends JFrame{
 	private JTextField idTF;
 
 	//set dimensions
-	private static final int WIDTH = 500;
+	private static final int WIDTH = 300;
 	private static final int HEIGHT = 80;
 	
 	//variable
@@ -22,10 +22,10 @@ public class GUIWindow extends JFrame{
 		//sets GUI design
 		setTitle("ID Viewer");
 		Container c = getContentPane();
-		c.setLayout(new GridLayout(1, 4));
+		c.setLayout(new GridLayout(1, 3));
 		
 		//create label
-		idLabel = new JLabel("ID", SwingConstants.RIGHT);
+		idLabel = new JLabel("ID", SwingConstants.CENTER);
 		
 		//create textbox
 		idTF = new JTextField(10);
@@ -51,7 +51,7 @@ public class GUIWindow extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-		WindowGUI window = new WindowGUI();
+		GUIWindow windowGUI = new GUIWindow();
 
 	}
 

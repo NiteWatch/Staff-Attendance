@@ -6,17 +6,18 @@ import java.sql.SQLException;
 
 public class DBConnect {
 
-	/**
-	 * @param args
-	 */
+	static final String JBDC_DRIVER = "com.mysql.jbdc.Driver";
+	static final String DB_URL = "OS-CASE-1.usd233.local";
+	
+	static final String uName = "adrian";
+	static final String uPass = "flores";
+	
 	public static void main(String[] args) {
 		
+		
 		try
-		{
-			String host = "OS-CASE-1.usd233.local";
-			String uName = "adrian";
-			String uPass = "flores";
-			Connection con = DriverManager.getConnection(host, uName, uPass);
+		{	
+			Connection con = DriverManager.getConnection(DB_URL, uName, uPass);
 		}
 		catch(SQLException error)
 		{
