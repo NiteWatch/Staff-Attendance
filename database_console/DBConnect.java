@@ -14,7 +14,7 @@ public class DBConnect {
 
 	public static void main(String[] args) {
 		
-		String DB_URL = "jbdc:sqlserver://OS-Case-1.usd233.local:1433;TSOS=tsos";
+		String DB_URL = "jbdc:sqlserver://OS-Case-1.usd233.local:1433;database=TSOS;integratedSecurity=true";
 		String uName = "adrian";
 		String uPass = "flores";
 		

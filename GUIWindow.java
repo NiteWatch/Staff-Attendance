@@ -51,9 +51,9 @@ public class GUIWindow extends JFrame{
 		public void actionPerformed(ActionEvent e)
 		{
 			//variable
-			double idValue = 0;
+			int idValue = 0;
 			//obtain id number from text field
-			idValue = Double.parseDouble(idTF.getText());
+			idValue = Integer.parseInt(idTF.getText());
 			System.out.println(idValue);
 		}
 	}
