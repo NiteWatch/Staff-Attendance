@@ -10,8 +10,6 @@ import com.microsoft.sqlserver.jdbc.SQLServerResultSet;
 
 public class DBConnect {
 
-	//static final String JBDC_DRIVER = "";
-
 	public static void main(String[] args) {
 		
 		String DB_URL = "jbdc:sqlserver://OS-Case-1.usd233.local:1433;database=TSOS;integratedSecurity=true";
@@ -24,8 +22,8 @@ public class DBConnect {
 		
 		try
 		{	
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			//DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
+			//Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
 	        con = DriverManager.getConnection(DB_URL, uName, uPass);
 	        if (con != null)
 	        	System.out.println("Connection achieved");
@@ -39,11 +37,15 @@ public class DBConnect {
      		while (rs.next()) {
      			System.out.println(rs.getString(4) + " " + rs.getString(6));
      		}
-	
+     		
+     		con.close();
 		}
+		
 		catch(SQLException error)
 		{
 			System.out.println(error.getMessage());
 		}
+		
+		
 	}
 }

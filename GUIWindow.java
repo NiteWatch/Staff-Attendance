@@ -54,6 +54,7 @@ public class GUIWindow extends JFrame{
 			int idValue = 0;
 			//obtain id number from text field
 			idValue = Integer.parseInt(idTF.getText());
+			idTF.selectAll();
 			System.out.println(idValue);
 		}
 	}
