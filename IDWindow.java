@@ -4,11 +4,8 @@ import javax.swing.*;
 
 import database_console.DBConnect;
 
+public class IDWindow extends JFrame{
 
-public class GUIWindow extends JFrame{
-	
-	public int idValue = 50;
-	
 	//label titles
 	private JLabel idLabel;
 	
@@ -22,10 +19,11 @@ public class GUIWindow extends JFrame{
 	private static final int WIDTH = 300;
 	private static final int HEIGHT = 80;
 	
-	//event id
-	private static int eventID = 0;
+	//variables
+	public int idValue = 0;
+	public int eventID = 0;
 	
-	public GUIWindow(int eventIDNumber) 
+	public IDWindow(int eventIDNumber) 
 	{
 		//sets GUI design
 		setTitle("ID Viewer");
@@ -61,19 +59,18 @@ public class GUIWindow extends JFrame{
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			//variable
-				//int idValue = 0;
 			//obtain id number from text field
 			idValue = Integer.parseInt(idTF.getText());
 			idTF.selectAll();
+			
+			//connect to server
 			DBConnect dbConnect = new DBConnect();
 			dbConnect.DBConnect("jbdc:sqlserver://OS-Case-1.usd233.local;database=TSOS;", "adrian;", "osfalcons15;",idValue,eventID);
 		}
 	}
 	
 	public static void main(String[] args) {
-		GUIWindow windowGUI = new GUIWindow(0);
-
+		IDWindow windowID = new IDWindow(0);
 	}
 
 }
