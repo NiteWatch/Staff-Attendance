@@ -42,15 +42,15 @@ public class GUIAdmin extends JFrame{
 		setTitle("Administrator Page");
 		
 		//panel for sidebar
-		JPanel c1 = new JPanel(new FlowLayout());
-		c1.setLayout(new GridLayout(4, 1));
-		c1.add(sortB = new JButton("Sort"));
-		c1.add(historyB = new JButton("History"));
-		c1.add(newEventB = new JButton("New Event"));
-		
-		JButton editEventB = new JButton("Edit Event");
+		JPanel c1 = new JPanel();
+		//c1.setLayout(new GridLayout(4, 1));
+		//c1.add(sortB = new JButton("Sort"));
+		//c1.add(historyB = new JButton("History"));
+		//c1.add(newEventB = new JButton("New Event"));
 		//c1.add(editEventB = new JButton("Edit Event"));
-		editEventB.setLocation(34, 92);
+		JButton editEventB = new JButton("Edit Event");
+		//setSize(100, 40);
+		setLocation(5, 35);
 		c1.add(editEventB);
 		
 		//panel for information labels
@@ -65,15 +65,15 @@ public class GUIAdmin extends JFrame{
 		
 		//add all created panels
 		JPanel c = new JPanel(new FlowLayout());
-		c.add(c1, BorderLayout.SOUTH);
+		c.add(c1, BorderLayout.EAST);
 		c.add(Box.createHorizontalStrut(40));
-		c.add(c2, BorderLayout.NORTH);
+		c.add(c2, BorderLayout.WEST);
 		add(c);
 		
 		//add action listeners
-		sortB.addActionListener(new sortHandler());
-		historyB.addActionListener(new historyHandler());
-		newEventB.addActionListener(new newEventHandler());
+		//sortB.addActionListener(new sortHandler());
+		//historyB.addActionListener(new historyHandler());
+		//newEventB.addActionListener(new newEventHandler());
 		editEventB.addActionListener(new editEventHandler());
 		
 		//set dimensions
