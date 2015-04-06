@@ -2,7 +2,6 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.Box;
 import database_console.DBConnect;
 
 public class GUIAdmin extends JFrame{
@@ -33,7 +32,7 @@ public class GUIAdmin extends JFrame{
 	private editEventHandler editEventHandler;
 	
 	//set dimensions
-	private static final int WIDTH = 600;
+	private static final int WIDTH = 700;
 	private static final int HEIGHT = 400;
 	
 	public GUIAdmin()
@@ -43,15 +42,15 @@ public class GUIAdmin extends JFrame{
 		
 		//panel for sidebar
 		JPanel c1 = new JPanel();
-		//c1.setLayout(new GridLayout(4, 1));
-		//c1.add(sortB = new JButton("Sort"));
-		//c1.add(historyB = new JButton("History"));
-		//c1.add(newEventB = new JButton("New Event"));
-		//c1.add(editEventB = new JButton("Edit Event"));
-		JButton editEventB = new JButton("Edit Event");
-		//setSize(100, 40);
-		setLocation(5, 35);
-		c1.add(editEventB);
+		c1.setLayout(new GridLayout(2, 2));
+		c1.add(sortB = new JButton("Sort"));
+		//c1.add(sortB, Box.BOTTOM_ALIGNMENT);
+		c1.add(historyB = new JButton("History"));
+		//c1.add(Box.createVerticalStrut(5));
+		c1.add(newEventB = new JButton("New Event"));
+		//c1.add(Box.createVerticalStrut(5));
+		c1.add(editEventB = new JButton("Edit Event"));
+		//c1.add(editEventB.BOTTOM_ALIGNMENT);
 		
 		//panel for information labels
 		JPanel c2 = new JPanel();
@@ -64,16 +63,17 @@ public class GUIAdmin extends JFrame{
 		//panel for information display
 		
 		//add all created panels
-		JPanel c = new JPanel(new FlowLayout());
-		c.add(c1, BorderLayout.EAST);
+		JPanel c = new JPanel();
+		c.add(c1, Box.BOTTOM_ALIGNMENT);
 		c.add(Box.createHorizontalStrut(40));
+		//c.add(newEventB, Box.BOTTOM_ALIGNMENT);
 		c.add(c2, BorderLayout.WEST);
 		add(c);
 		
 		//add action listeners
-		//sortB.addActionListener(new sortHandler());
-		//historyB.addActionListener(new historyHandler());
-		//newEventB.addActionListener(new newEventHandler());
+		sortB.addActionListener(new sortHandler());
+		historyB.addActionListener(new historyHandler());
+		newEventB.addActionListener(new newEventHandler());
 		editEventB.addActionListener(new editEventHandler());
 		
 		//set dimensions
