@@ -4,3 +4,7 @@
 /IDWindow$idHandler.class
 /IDWindow.class
 /GUIAdmin.class
+/GUIAdmin$editEventHandler.class
+/GUIAdmin$historyHandler.class
+/GUIAdmin$newEventHandler.class
+/GUIAdmin$sortHandler.class
