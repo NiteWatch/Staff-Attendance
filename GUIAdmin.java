@@ -13,6 +13,17 @@ import database_console.DBConnect;
 
 public class GUIAdmin extends JFrame{
 
+	//server credentials
+	private static final String USER = "system";
+	private static final String PASS = "admin";
+	private static final String DB_URL = "jdbc:oracle:thin:@localhost:1521";
+	private static final String DB_NAME=  "XE";
+	
+//	private static final String USER = "adrian";
+//	private static final String PASS = "osfalcons15";
+//	private static final String DB_URL = "OS-Case-1.usd233.local";
+//	private static final String DB_NAME=  "TSOS";
+	
 	//label titles
 	private JLabel firstNameLabel;
 	private JLabel lastNamelabel;
@@ -42,6 +53,11 @@ public class GUIAdmin extends JFrame{
 	private static final int WIDTH = 700;
 	private static final int HEIGHT = 400;
 	
+	//create elements for database display
+	protected DefaultListModel attendanceInfo;
+	private JScrollPane attendanceListScroll;
+	private JList attendanceList;
+	
 	public GUIAdmin()
 	{
 		//sets GUI title
@@ -57,34 +73,36 @@ public class GUIAdmin extends JFrame{
 		
 		//panel for information labels
 		JPanel c2 = new JPanel();
-		c2.setLayout(new GridBagLayout());
+		c2.setLayout(new GridLayout(1, 4));
 		c2.add(eventLabel = new JLabel("Event"));
-		GridBagConstraints b = new GridBagConstraints();
-		b.fill = GridBagConstraints.SOUTHWEST;
-		b.weightx = 10;
-		b.weighty = 10;
-		b.gridx = 0;
-		b.gridy = -2;
 		c2.add(timeLabel = new JLabel("Time"));
 		c2.add(dateLabel = new JLabel("Date"));
 		c2.add(numberLabel = new JLabel("Number Attended"));
 		
 		//panel for information display
+		JPanel c3 = new JPanel();
+		c3.setLayout(new GridBagLayout());
+		GridBagConstraints a = new GridBagConstraints();
+		a.fill = GridBagConstraints.BOTH;
+		a.weightx = 1;
+		a.gridwidth = 3;
+		a.weighty = 90;
+		a.gridx = 0;
+		a.gridy = 0;
+		attendanceListScroll = new JScrollPane(attendanceList = new JList());
+		c3.add(attendanceListScroll,a);
+		
+		//create table with data
 		
 		//add all created panels
 		JPanel c = new JPanel();
-		c.setLayout(new GridBagLayout());
-		GridBagConstraints a = new GridBagConstraints();
-		a.fill = GridBagConstraints.SOUTHWEST;
-		a.weightx = 10;
-		a.weighty = 10;
-		a.gridx = 0;
-		a.gridy = -2;
-		c.add(c1);
-		
-		//c.add(Box.createHorizontalStrut(40));
-		//c.add(newEventB, Box.BOTTOM_ALIGNMENT);
-		//c.add(c2, Box.LEFT_ALIGNMENT);
+		c.setLayout(new GridLayout(2, 1));
+		c.add(c1, Box.LEFT_ALIGNMENT);
+		c.add(Box.createHorizontalStrut(10));
+		c.add(c2, Box.RIGHT_ALIGNMENT);
+		c.add(Box.createHorizontalStrut(10));
+		c.add(c3, Box.CENTER_ALIGNMENT);
+		c.add(Box.createHorizontalStrut(10));
 		add(c);
 		
 		//add action listeners
@@ -118,16 +136,17 @@ public class GUIAdmin extends JFrame{
 		        if (con != null)
 		        	System.out.println("Connection achieved");
 		        
-		        String SQL = "SELECT * FROM tbl_attendees ORDER BY teacher_id, time";
+		        String SQL = "select first_name,last_name,event_id,time " +
+		        		"from tbl_attendees a join tbl_staff s ON (a.teacher_id = s.teacher_id)";
 		        System.out.println(SQL);
 	     		Statement stmt = con.createStatement();
 	     		ResultSet rs = stmt.executeQuery(SQL);
 	     		
-	     	//Iterate through the data in the result set and display it.
+	     		//Iterate through the data in the result set and display it.
 	     		while (rs.next()) {
-	     			System.out.println(rs.getString(3) + " " + rs.getString(1));
+	     			System.out.printf("%s\t%s\t%s\t%s\n",rs.getString(1),rs.getString(2),
+	     					rs.getString(3),rs.getString(4));
 	     		}
-
 	     		con.close();
 			}
 			
@@ -142,7 +161,37 @@ public class GUIAdmin extends JFrame{
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			 
+			try
+			{	
+				SQLServerDataSource ds = new SQLServerDataSource();
+				ds.setIntegratedSecurity(false);
+				ds.setServerName("OS-Case-1.usd233.local");
+				ds.setDatabaseName("TSOS");
+				ds.setUser("adrian");
+				ds.setPassword("osfalcons15");
+				Connection con = ds.getConnection();
+				
+				//show if connection is established
+		        if (con != null)
+		        	System.out.println("Connection achieved");
+		        
+		        String SQL = "select * from tbl_attendees";
+		        System.out.println(SQL);
+	     		Statement stmt = con.createStatement();
+	     		ResultSet rs = stmt.executeQuery(SQL);
+	     		
+	     		//Iterate through the data in the result set and display it.
+	     		while (rs.next()) {
+	     			System.out.printf("%s\t%s\t%s\t%s\n",rs.getString(1),rs.getString(2),
+	     					rs.getString(3),rs.getString(4));
+	     		}
+	     		con.close();
+			}
+			
+			catch(SQLException error)
+			{
+				System.out.println(error.getMessage());
+			}
 		}
 	}
 	
