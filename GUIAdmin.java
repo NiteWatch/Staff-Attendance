@@ -1,11 +1,13 @@
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.table.DefaultTableModel;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 
@@ -14,10 +16,10 @@ import database_console.DBConnect;
 public class GUIAdmin extends JFrame{
 
 	//server credentials
-	private static final String USER = "system";
-	private static final String PASS = "admin";
-	private static final String DB_URL = "jdbc:oracle:thin:@localhost:1521";
-	private static final String DB_NAME=  "XE";
+	private static final String USER = "admin";
+	private static final String PASS = "osfalcons15";
+	private static final String DB_URL = "OS-Case-1.usd233.local";
+	private static final String DB_NAME=  "TSOS";
 	
 //	private static final String USER = "adrian";
 //	private static final String PASS = "osfalcons15";
@@ -50,16 +52,19 @@ public class GUIAdmin extends JFrame{
 	private editEventHandler editEventHandler;
 	
 	//set dimensions
-	private static final int WIDTH = 700;
-	private static final int HEIGHT = 400;
+	private static final int WIDTH = 800;
+	private static final int HEIGHT = 500;
 	
 	//create elements for database display
-	protected DefaultListModel attendanceInfo;
+	protected DefaultListModel<String> attendanceInfo;
 	private JScrollPane attendanceListScroll;
 	private JList attendanceList;
 	
 	public GUIAdmin()
 	{
+		
+		attendanceInfo = new DefaultListModel<String>();
+		attendanceInfo.addElement("asdv ,..s,.admkxcn kladrhkfh gaerhgs");
 		//sets GUI title
 		setTitle("Administrator Page");
 		
@@ -81,28 +86,29 @@ public class GUIAdmin extends JFrame{
 		
 		//panel for information display
 		JPanel c3 = new JPanel();
-		c3.setLayout(new GridBagLayout());
-		GridBagConstraints a = new GridBagConstraints();
-		a.fill = GridBagConstraints.BOTH;
-		a.weightx = 1;
-		a.gridwidth = 3;
-		a.weighty = 90;
-		a.gridx = 0;
-		a.gridy = 0;
-		attendanceListScroll = new JScrollPane(attendanceList = new JList());
-		c3.add(attendanceListScroll,a);
+//		c3.setLayout(new GridBagLayout());
+//		GridBagConstraints a = new GridBagConstraints();
+//		a.fill = GridBagConstraints.BOTH;
+//		a.weightx = 3;
+//		a.gridwidth = 3;
+//		a.weighty = 3;
+//		a.gridx = 0;
+//		a.gridy = 0;
+		attendanceListScroll = new JScrollPane(attendanceList = new JList<String>(attendanceInfo));
+//		c3.add(attendanceListScroll,a);
+		c3.add(attendanceListScroll);
 		
 		//create table with data
 		
 		//add all created panels
-		JPanel c = new JPanel();
-		c.setLayout(new GridLayout(2, 1));
-		c.add(c1, Box.LEFT_ALIGNMENT);
-		c.add(Box.createHorizontalStrut(10));
-		c.add(c2, Box.RIGHT_ALIGNMENT);
-		c.add(Box.createHorizontalStrut(10));
-		c.add(c3, Box.CENTER_ALIGNMENT);
-		c.add(Box.createHorizontalStrut(10));
+		JPanel c = new JPanel(new FlowLayout());
+		c.add(c1, BorderLayout.CENTER);
+		//c.add(Box.createVerticalStrut(50));
+		c.add(Box.createHorizontalStrut(70));
+		c.add(c2, BorderLayout.EAST);
+		c.add(Box.createHorizontalStrut(50));
+		c.add(c3, BorderLayout.SOUTH);
+		c.add(Box.createHorizontalStrut(30));
 		add(c);
 		
 		//add action listeners
@@ -122,7 +128,12 @@ public class GUIAdmin extends JFrame{
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			try
+			
+			String[] columnNames = {"First Name", "Last Name", "Event Type", "Time"};
+			DefaultTableModel dtm = new DefaultTableModel(columnNames, 0);
+			dtm.addColumn(9);
+			
+ 			try
 			{	
 				SQLServerDataSource ds = new SQLServerDataSource();
 				ds.setIntegratedSecurity(false);
@@ -138,14 +149,19 @@ public class GUIAdmin extends JFrame{
 		        
 		        String SQL = "select first_name,last_name,event_id,time " +
 		        		"from tbl_attendees a join tbl_staff s ON (a.teacher_id = s.teacher_id)";
-		        System.out.println(SQL);
 	     		Statement stmt = con.createStatement();
 	     		ResultSet rs = stmt.executeQuery(SQL);
 	     		
 	     		//Iterate through the data in the result set and display it.
-	     		while (rs.next()) {
-	     			System.out.printf("%s\t%s\t%s\t%s\n",rs.getString(1),rs.getString(2),
-	     					rs.getString(3),rs.getString(4));
+	     		while (rs.next()) 
+	     		{
+	     			dtm.addRow(new Object[]{rs.getString(1),
+	     									rs.getString(2),
+	     									rs.getString(3)});
+	     			
+	     			
+	     			//System.out.printf("%s\t%s\t%s\t%s\n",rs.getString(1),rs.getString(2),
+	     			//		rs.getString(3),rs.getString(4));
 	     		}
 	     		con.close();
 			}
