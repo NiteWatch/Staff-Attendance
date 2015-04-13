@@ -21,11 +21,6 @@ public class GUIAdmin extends JFrame{
 	private static final String DB_URL = "OS-Case-1.usd233.local";
 	private static final String DB_NAME=  "TSOS";
 	
-//	private static final String USER = "adrian";
-//	private static final String PASS = "osfalcons15";
-//	private static final String DB_URL = "OS-Case-1.usd233.local";
-//	private static final String DB_NAME=  "TSOS";
-	
 	//label titles
 	private JLabel firstNameLabel;
 	private JLabel lastNamelabel;
@@ -137,10 +132,10 @@ public class GUIAdmin extends JFrame{
 			{	
 				SQLServerDataSource ds = new SQLServerDataSource();
 				ds.setIntegratedSecurity(false);
-				ds.setServerName("OS-Case-1.usd233.local");
-				ds.setDatabaseName("TSOS");
-				ds.setUser("adrian");
-				ds.setPassword("osfalcons15");
+				ds.setServerName(DB_URL);
+				ds.setDatabaseName(DB_NAME);
+				ds.setUser(USER);
+				ds.setPassword(PASS);
 				Connection con = ds.getConnection();
 				
 				//show if connection is established
