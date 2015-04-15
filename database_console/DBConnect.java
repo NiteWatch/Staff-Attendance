@@ -1,49 +1,40 @@
 package database_console;
 
 import java.sql.*;
+
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 public class DBConnect {
 
-	public void DBConnect(String DB_URL, String uName, String uPass,int teacherID,int eventID)
-	
+	public static void AddStaff(String firstName, String lastName, int idValue)
 	{
-		try
-		{	
-			SQLServerDataSource ds = new SQLServerDataSource();
-			ds.setIntegratedSecurity(false);
-			ds.setServerName("OS-Case-1.usd233.local");
-			ds.setDatabaseName("TSOS");
-			ds.setUser("adrian");
-			ds.setPassword("osfalcons15");
-			Connection con = ds.getConnection();
-			
-			//show if connection is established
-	        if (con != null)
-	        	System.out.println("Connection achieved");
-	        
-	        String SQL = "INSERT INTO tbl_attendees(teacher_id,event_id) " + "VALUES (" + teacherID + "," + eventID + ")";
-	        System.out.println(SQL);
-     		Statement stmt = con.createStatement();
-     		ResultSet rs = stmt.executeQuery(SQL);
-     
-     		// Iterate through the data in the result set and display it.
-     		//while (rs.next()) {
-     		//	System.out.println(rs.getString(2) + " " + rs.getString(3));
-     		//}
-     		
-     		con.close();
+		try{
+			//insert data
+			Connection con = DBConnect.getSQLConnection();
+			String SQL = "INSERT INTO tbl_staff(teacher_id, first_name, last_name) " + "VALUES (" + idValue + ",'" +  firstName + "','" + lastName + "')";
+			System.out.println(SQL);
+			Statement stmt = con.createStatement();
+			stmt.execute(SQL);
 		}
-		
-		catch(SQLException error)
-		{
-			System.out.println(error.getMessage());
-		}
+		catch(SQLServerException e){
+			System.out.println("Error");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
-	public static void main(String[] args) {
-		
-		//define server location
-		DBConnect dbConnect = new DBConnect();
-		//dbConnect.DBConnect("jbdc:sqlserver://OS-Case-1.usd233.local;database=TSOS;", "adrian;", "osfalcons15;",0,0);
+	
+	private static Connection getSQLConnection() throws SQLServerException
+	{
+		//set up login
+		SQLServerDataSource ds = new SQLServerDataSource();
+		ds.setIntegratedSecurity(false);
+		ds.setServerName("OS-Case-1.usd233.local");
+		ds.setDatabaseName("TSOS");
+		ds.setUser("adrian");
+		ds.setPassword("osfalcons15");
+		return(ds.getConnection());
 	}
 }

@@ -17,7 +17,7 @@ public class AddStaff extends JFrame{
 	//server credentials
 	private static final String USER = "admin";
 	private static final String PASS = "osfalcons15";
-	private static final String DB_URL = "OS-Case-1.usd233.local";
+	private static final String DB_URL = "jbdc:sqlserver://OS-Case-1.usd233.local;database=TSOS;";
 	private static final String DB_NAME=  "TSOS";
 	
 	//label titles
@@ -51,9 +51,7 @@ public class AddStaff extends JFrame{
 	private	String passWord = "";
 	
 	public AddStaff()	
-	{
-		
-		
+	{	
 		//sets GUI title
 		setTitle("Administrator Page");
 		
@@ -91,6 +89,10 @@ public class AddStaff extends JFrame{
 		enterHandler = new enterHandler();
 		clearHandler = new clearHandler();
 		
+		//add listeners
+		enterB.addActionListener(enterHandler);
+		clearB.addActionListener(clearHandler);
+		
 		//sets dimensions
 		setSize(WIDTH, HEIGHT);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -103,13 +105,19 @@ public class AddStaff extends JFrame{
 		{
 			//retrieve values
 			firstName = firstNameTF.getText();
-			System.out.print(firstName);
-			/*lastName = lastNameTF.getText();
+			System.out.println(firstName);
+			
+			lastName = lastNameTF.getText();
 			System.out.println(lastName);
+			
 			idValue = Integer.parseInt(IDTF.getText());
 			System.out.println(idValue);
+			
 			passWord = passwordTF.getText();
-			System.out.println(passWord);*/
+			System.out.println(passWord);
+			
+			//input data
+			DBConnect.AddStaff(firstName, lastName, idValue);
 		}
 	}
 	
@@ -117,7 +125,11 @@ public class AddStaff extends JFrame{
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			 firstName = firstName.
+			//clear textboxes
+			firstNameTF.setText("");
+			lastNameTF.setText("");
+			IDTF.setText("");
+			passwordTF.setText("");
 		}
 	}
 	

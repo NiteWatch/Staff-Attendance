@@ -65,7 +65,7 @@ public class IDWindow extends JFrame{
 			
 			//connect to server
 			DBConnect dbConnect = new DBConnect();
-			dbConnect.DBConnect("jbdc:sqlserver://OS-Case-1.usd233.local;database=TSOS;", "adrian;", "osfalcons15;",idValue,eventID);
+			//dbConnect.DBConnect("jbdc:sqlserver://OS-Case-1.usd233.local;database=TSOS;", "adrian;", "osfalcons15;",idValue,eventID);
 		}
 	}
 	
