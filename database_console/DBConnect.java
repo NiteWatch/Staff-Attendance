@@ -20,9 +20,8 @@ public class DBConnect {
 		catch(SQLServerException e){
 			System.out.println("Error");
 			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} 	catch (SQLException e) {
+					e.printStackTrace();
 		}	
 	}
 	
